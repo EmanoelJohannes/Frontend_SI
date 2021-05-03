@@ -14,6 +14,7 @@ function Main({ navigation, isFocused }) {
   const [postos, setPostos] = useState([]);
 
   const user = navigation.getParam('user');
+  const flag = false;
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -32,6 +33,12 @@ function Main({ navigation, isFocused }) {
           latitudeDelta: 0.04,
           longitudeDelta: 0.04,
         })
+      }
+
+      if (user.agente == true) {
+        flag = true;
+      } else {
+        flag = false;
       }
     }
 
@@ -63,7 +70,7 @@ function Main({ navigation, isFocused }) {
   return (
     <>
 
-      {user.agente == true ? 
+      {flag == true ? 
       
       <>
         <MapView 
