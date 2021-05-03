@@ -12,9 +12,9 @@ import api from '../../services/api';
 function Main({ navigation, isFocused }) {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [postos, setPostos] = useState([]);
+  const [flag, setFlag] = useState(false);
 
   const user = navigation.getParam('user');
-  const flag = false;
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -36,10 +36,9 @@ function Main({ navigation, isFocused }) {
       }
 
       if (user.agente == true) {
-        flag = true;
-      } else {
-        flag = false;
+        setFlag(true);
       }
+      
     }
 
     loadInitialPosition();
