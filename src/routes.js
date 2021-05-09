@@ -49,6 +49,10 @@ import SelectDateTime from './pages/SelectDateTime';
 import CadastrarPosto from './pages/CadastrarPosto';
 
 import ConfigurationMenu from './pages/ConfigurationMenu';
+import Profile from './pages/Profile';
+import Marcacoes from './pages/Marcacoes';
+import MapPostoAgendado from './pages/MapPostoAgendado';
+import Sobre from './pages/Sobre';
 
 const Routes = createAppContainer(
   createSwitchNavigator(
@@ -95,6 +99,10 @@ const Routes = createAppContainer(
         ConfigurationMenu: {
           screen: createStackNavigator({
             ConfigurationMenu,
+            Profile,
+            Marcacoes,
+            MapPostoAgendado,
+            Sobre
           }, { defaultNavigationOptions: { headerStatusBarHeight: 8 } }),
           navigationOptions: {
             inactiveTintColor: '#333',

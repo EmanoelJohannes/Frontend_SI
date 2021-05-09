@@ -8,7 +8,22 @@ import Background from '../../components/BackgroundSigned';
 
 import { Container, OptionsList, ItemContainer, Item, ContentIcon, Label } from './styles';
 
+import {AsyncStorage} from 'react-native';
+
 export default function ConfigurationMenu({navigation}) {
+
+    const [user, setUser] = useState([]);
+
+    useEffect(()=>{
+        async function getUser(){
+            const userData = await AsyncStorage.getItem('@user');
+
+            setUser(userData);
+
+        }
+
+        getUser();
+    }, []);
 
     return (        
     <Background>
@@ -16,23 +31,23 @@ export default function ConfigurationMenu({navigation}) {
 
             <OptionsList>
                 <ItemContainer>
-                    <Item>
+                    <Item onPress={() => navigation.navigate('Profile', {user: user})}>
                         <ContentIcon><Icon size={20} name="person" color="#2c692b" /></ContentIcon>
                         <Label>Meu perfil</Label>
                     </Item>
                 </ItemContainer>
-                
+
                 <ItemContainer>
-                    <Item >
-                        <ContentIcon><Icon size={20} name="vpn-key" color="#2c692b" /></ContentIcon>
-                        <Label>Alterar minha senha</Label>
+                    <Item onPress={() => navigation.navigate('Marcacoes', {user: user})}>
+                        <ContentIcon><Icon size={20} name="assignment" color="#2c692b" /></ContentIcon>
+                        <Label>Marcações</Label>
                     </Item>
                 </ItemContainer>
-                
+
                 <ItemContainer>
-                    <Item>
-                        <ContentIcon><Icon size={20} name="assignment" color="#2c692b" /></ContentIcon>
-                        <Label>Ajuda</Label>
+                    <Item onPress={() => navigation.navigate('Sobre')}>
+                        <ContentIcon><Icon size={20} name="help" color="#2c692b" /></ContentIcon>
+                        <Label>Sobre</Label>
                     </Item>
                 </ItemContainer>
                 

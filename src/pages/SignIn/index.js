@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Image, View, Alert } from 'react-native';
 import Background from '../../components/Background';
+import {AsyncStorage} from 'react-native';
 
 
 import { Container, Form, FormInput, SubmitButton, Separator, SignLink, SignLinkText } from './styles';
@@ -15,24 +16,31 @@ import api from '../../services/api';
 export default function SignIn({ navigation }) {
 
   const senhaRef = useRef();
-
-
+  
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit() {
+    setLoading(true);
+
     const response = await api.post('/sessions', { login, senha });
-    
-    console.log(response);
     
     if (!response.data.error) {
       const user = response.data.user[0];
+
+      await AsyncStorage.setItem(
+        '@user', JSON.stringify(user)
+      );
+      
+      setLoading(false);
 
       navigation.navigate("Main", {user});
 
     } else {
       Alert.alert("Ops", response.data.error);
+      setLoading(false);
+
     }
     
   }

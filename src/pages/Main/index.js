@@ -9,7 +9,10 @@ import posto_img from '../../assets/images/posto.png';
 
 import api from '../../services/api';
 
-function Main({ navigation, isFocused }) {
+console.ignoreYellowBox = ['Warning:'];
+
+function Main({ navigation }) {
+
   const [currentRegion, setCurrentRegion] = useState(null);
   const [postos, setPostos] = useState([]);
   const [flag, setFlag] = useState(false);
@@ -25,19 +28,22 @@ function Main({ navigation, isFocused }) {
           enableHighAccuracy: true,
         });
 
-        const { latitude, longitude } = coords;
+        if (coords){
+          const { latitude, longitude } = coords;
 
-        setCurrentRegion({
-          latitude,
-          longitude,
-          latitudeDelta: 0.04,
-          longitudeDelta: 0.04,
-        })
+          setCurrentRegion({
+            latitude,
+            longitude,
+            latitudeDelta: 0.04,
+            longitudeDelta: 0.04,
+          })
+        }
+        if (user.agente == true) {
+          setFlag(true);
+        }
       }
 
-      if (user.agente == true) {
-        setFlag(true);
-      }
+      
       
     }
 
@@ -60,6 +66,9 @@ function Main({ navigation, isFocused }) {
 
   function handleRegionChanged(region) {
     setCurrentRegion(region);
+  }
+
+  async function goToCurrentLocation(){
   }
 
   if (!currentRegion) {
@@ -160,7 +169,7 @@ function Main({ navigation, isFocused }) {
             // onChangeText={setTechs}
           />
 
-          <TouchableOpacity onPress={() => {}} style={styles.loadButton}>
+          <TouchableOpacity onPress={() => {goToCurrentLocation()}} style={styles.loadButton}>
             <MaterialIcons name="my-location" size={20} color="#FFF" />
           </TouchableOpacity>
         </View>
